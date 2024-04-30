@@ -6,34 +6,49 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+//@AllArgsConstructor
 @Data
 public class SorteioService {
     @Autowired
     SorteioRepository sorteioRepository;
 
-    public List<Integer>gerarNumeroDaSorteio(){
-        Random random = new Random();
-        List<Integer>numerosDoSorteio = new ArrayList<>();
+    public void gerarNumeroDaSorteio(String seuNumero) {
+        Pattern pattern = Pattern.compile("\\b\\d{1,2}\\b");
+        Matcher matcher = pattern.matcher(seuNumero);
+        List<String>numeros = new ArrayList<>();
 
-        Integer numerosAleatorios = random.nextInt(65);
-        for (int i = 0; numerosAleatorios <= 6; i++){
-            numerosDoSorteio.add(i);
+        while (matcher.find()){
+            numeros.add(matcher.group());
         }
+;
+        if (numeros.size() == 6) {
+            Random random = new Random();
+            List<String> numerosDoSorteio = new ArrayList<>();
 
-        return numerosDoSorteio;
+            for (int i = 0; i <= 6; i++) {
+                Integer numerosAleatorios = random.nextInt(65);
+                numerosDoSorteio.add(String.valueOf(numerosAleatorios));
+            }
+            String resultados = numerosDoSorteio.toString();
 
+            if (numeros.equals(resultados)) {
+                System.out.println("Você ganhou na mega");
+                System.out.println(resultados);
+            } else {
+                System.out.println("Infelizmente você não foi sorteado");
+                System.out.println(resultados);
+            }
+
+        } else {
+            System.out.println("Você deve  informar 6 dígitos para concorrer ao sorteio  ");
+        }
     }
 
 
-    public List<Integer>verificarSorteio(Integer seuNumero){
-        // compara os número informandos com a número do metodo GerarNumeroDaSorteio
-        return new ArrayList<>();
-    }
 }

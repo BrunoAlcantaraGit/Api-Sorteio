@@ -15,7 +15,7 @@ public class SorteioEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(nullable = false,length = 6)
-    private List<Integer> NumeroSorteado = new ArrayList<>();
+    private String NumeroSorteado;
     @Column(nullable = false)
     private LocalDate dataatual;
 

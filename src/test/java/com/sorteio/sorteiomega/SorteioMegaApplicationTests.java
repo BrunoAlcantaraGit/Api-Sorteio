@@ -1,13 +1,20 @@
 package com.sorteio.sorteiomega;
 
+import com.sorteio.mega.sorteioService.SorteioService;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import java.util.List;
 
-@SpringBootTest
-class SorteioMegaApplicationTests {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+class SorteioMegaAppicationTests {
 
 	@Test
-	void contextLoads() {
+	public void testGerarNumeroDaSorteio() {
+		SorteioService sorteioService = new SorteioService();
+
+		sorteioService.gerarNumeroDaSorteio("20,30,40,50,60,70");
+
+		}
 	}
 
-}
