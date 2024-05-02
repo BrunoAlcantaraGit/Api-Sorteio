@@ -14,6 +14,8 @@ public class SorteioEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String nome;
+    private String CPF;
     @Column(nullable = false,length = 6)
     private String NumeroSorteado;
     @Column(nullable = false)

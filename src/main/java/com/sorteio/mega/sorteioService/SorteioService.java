@@ -19,19 +19,20 @@ public class SorteioService {
     SorteioRepository sorteioRepository;
 
     public void gerarNumeroDaSorteio(String seuNumero) {
+
         Pattern pattern = Pattern.compile("\\b\\d{1,2}\\b");
         Matcher matcher = pattern.matcher(seuNumero);
-        List<String>numeros = new ArrayList<>();
+        List<String> numeros = new ArrayList<>();
 
-        while (matcher.find()){
+        while (matcher.find()) {
             numeros.add(matcher.group());
         }
-;
+
         if (numeros.size() == 6) {
             Random random = new Random();
             List<String> numerosDoSorteio = new ArrayList<>();
 
-            for (int i = 0; i <= 6; i++) {
+            for (int i = 0; i < 6; i++) {
                 Integer numerosAleatorios = random.nextInt(65);
                 numerosDoSorteio.add(String.valueOf(numerosAleatorios));
             }
@@ -40,9 +41,11 @@ public class SorteioService {
             if (numeros.equals(resultados)) {
                 System.out.println("Você ganhou na mega");
                 System.out.println(resultados);
+                System.out.println(numeros);
             } else {
                 System.out.println("Infelizmente você não foi sorteado");
                 System.out.println(resultados);
+                System.out.println(numeros);
             }
 
         } else {
