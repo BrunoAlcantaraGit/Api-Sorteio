@@ -1,6 +1,8 @@
 package com.sorteio.mega.sorteioService;
 
-import com.sorteio.mega.sorteioRepository.SorteioRepository;
+
+import com.sorteio.mega.sorteioEntity.EntityCandidato;
+import com.sorteio.mega.sorteioRepository.CandidadoRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,48 +11,45 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+
 
 @Service
-//@AllArgsConstructor
+@AllArgsConstructor
 @Data
 public class SorteioService {
-    @Autowired
-    SorteioRepository sorteioRepository;
 
-    public void gerarNumeroDaSorteio(String seuNumero) {
+    @Autowired
+    CandidadoRepository candidadoRepository;
+
+
+    public EntityCandidato salvarCandidato(EntityCandidato candidado) {
+
+        String seuNumero = candidado.getNumeroApostado();
 
         Pattern pattern = Pattern.compile("\\b\\d{1,2}\\b");
-        Matcher matcher = pattern.matcher(seuNumero);
+        Matcher matcher = pattern.matcher((CharSequence) seuNumero);
         List<String> numeros = new ArrayList<>();
 
         while (matcher.find()) {
             numeros.add(matcher.group());
         }
+        candidado.setNumeroApostado(String.valueOf(numeros));
 
         if (numeros.size() == 6) {
             Random random = new Random();
-            List<String> numerosDoSorteio = new ArrayList<>();
+            List<String> numerosDoSorteado = new ArrayList<>();
 
             for (int i = 0; i < 6; i++) {
                 Integer numerosAleatorios = random.nextInt(65);
-                numerosDoSorteio.add(String.valueOf(numerosAleatorios));
+                numerosDoSorteado.add(String.valueOf(numerosAleatorios));
+                candidado.setNumeroSorteado(String.valueOf(numerosDoSorteado));
             }
-            String resultados = numerosDoSorteio.toString();
-
-            if (numeros.equals(resultados)) {
-                System.out.println("Você ganhou na mega");
-                System.out.println(resultados);
-                System.out.println(numeros);
-            } else {
-                System.out.println("Infelizmente você não foi sorteado");
-                System.out.println(resultados);
-                System.out.println(numeros);
-            }
+            candidadoRepository.save(candidado);
 
         } else {
-            System.out.println("Você deve  informar 6 dígitos para concorrer ao sorteio  ");
+            throw new RuntimeException("Você precisa informar uma sequencia de números de 6 dígitos, entre 01 a 65");
         }
+        return candidado;
     }
 
 

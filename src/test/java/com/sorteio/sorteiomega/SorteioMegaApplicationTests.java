@@ -11,9 +11,9 @@ class SorteioMegaAppicationTests {
 
 	@Test
 	public void testGerarNumeroDaSorteio() {
-		SorteioService sorteioService = new SorteioService();
 
-		sorteioService.gerarNumeroDaSorteio("20,30,40,50,60,70");
+
+
 
 		}
 	}
