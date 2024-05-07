@@ -22,7 +22,7 @@ public class SorteioService {
     CandidadoRepository candidadoRepository;
 
 
-    public EntityCandidato salvarCandidato(EntityCandidato candidado) {
+    public EntityCandidato salvarCandidato(EntityCandidato candidado)  throws Exception{
 
         String seuNumero = candidado.getNumeroApostado();
 
@@ -35,6 +35,7 @@ public class SorteioService {
         }
         candidado.setNumeroApostado(String.valueOf(numeros));
 
+
         if (numeros.size() == 6) {
             Random random = new Random();
             List<String> numerosDoSorteado = new ArrayList<>();
@@ -44,13 +45,22 @@ public class SorteioService {
                 numerosDoSorteado.add(String.valueOf(numerosAleatorios));
                 candidado.setNumeroSorteado(String.valueOf(numerosDoSorteado));
             }
-            candidadoRepository.save(candidado);
 
         } else {
-            throw new RuntimeException("Você precisa informar uma sequencia de números de 6 dígitos, entre 01 a 65");
+            throw new RuntimeException("Você precisa informar uma sequencia de números de 6 dígitos");
         }
-        return candidado;
+        if (candidado.getNumeroApostado().equals(candidado.getNumeroSorteado())) {
+            candidado.setResultadoDaAposta("Parabés,Você Ganhou na mega!");
+
+        } else {
+            candidado.setResultadoDaAposta("Infelizmente, você não ganhou o concurso!");
+        }
+        return candidadoRepository.save(candidado);
     }
 
+    public List<EntityCandidato> resultadoSorteio () throws Exception {
+     return   candidadoRepository.findAll();
+
+    }
 
 }

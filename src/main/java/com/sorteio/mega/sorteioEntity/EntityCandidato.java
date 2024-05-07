@@ -23,6 +23,7 @@ public class EntityCandidato {
     private String numeroApostado;
     @Column(nullable = false)
     private LocalDate dataatual;
+    private String resultadoDaAposta;
 
    @PrePersist
     public void prePersist() {
