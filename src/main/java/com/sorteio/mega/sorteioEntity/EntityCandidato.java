@@ -19,7 +19,6 @@ public class EntityCandidato {
 
     @Column(nullable = false)
     private String NumeroSorteado;
-
     private String numeroApostado;
     @Column(nullable = false)
     private LocalDate dataatual;

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -28,11 +29,12 @@ public class SorteioController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    @GetMapping("/resultado-da-aposta")
-    public ResponseEntity <List<EntityCandidato>> resultadoSorteio() throws Exception {
+    @GetMapping("/resultado-da-aposta/{cpf}")
+    public ResponseEntity <Optional<EntityCandidato>>resultadoSorteio(@PathVariable String cpf) throws Exception {
         try {
-           return  new ResponseEntity<>(sorteioService.resultadoSorteio(),HttpStatus.FOUND);
+           return  new ResponseEntity<>(sorteioService.resultadoSorteio(cpf),HttpStatus.OK);
         }catch (Exception e){
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }

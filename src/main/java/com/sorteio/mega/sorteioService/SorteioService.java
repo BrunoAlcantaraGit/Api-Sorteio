@@ -21,7 +21,6 @@ public class SorteioService {
     @Autowired
     CandidadoRepository candidadoRepository;
 
-
     public EntityCandidato salvarCandidato(EntityCandidato candidado)  throws Exception{
 
         String seuNumero = candidado.getNumeroApostado();
@@ -58,8 +57,14 @@ public class SorteioService {
         return candidadoRepository.save(candidado);
     }
 
-    public List<EntityCandidato> resultadoSorteio () throws Exception {
-     return   candidadoRepository.findAll();
+    public Optional<EntityCandidato> resultadoSorteio (String cpf) throws Exception {
+        Optional<EntityCandidato> retorno = candidadoRepository.findByCPF(cpf);
+        if(retorno.isPresent()){
+            return retorno;
+        }else{
+            throw new RuntimeException("Candidat não existe ou CPF informado incorreto");
+
+        }
 
     }
 
