@@ -21,7 +21,7 @@ public class SorteioService {
     @Autowired
     CandidadoRepository candidadoRepository;
 
-    public EntityCandidato salvarCandidato(EntityCandidato candidado)  throws Exception{
+    public EntityCandidato salvarCandidato(EntityCandidato candidado) throws Exception {
 
         String seuNumero = candidado.getNumeroApostado();
 
@@ -57,15 +57,24 @@ public class SorteioService {
         return candidadoRepository.save(candidado);
     }
 
-    public Optional<EntityCandidato> resultadoSorteio (String cpf) throws Exception {
+    public Optional<EntityCandidato> resultadoSorteio(String cpf) throws Exception {
         Optional<EntityCandidato> retorno = candidadoRepository.findByCPF(cpf);
-        if(retorno.isPresent()){
+        if (retorno.isPresent()) {
             return retorno;
-        }else{
+        } else {
             throw new RuntimeException("Candidat não existe ou CPF informado incorreto");
 
         }
 
     }
 
+    public Optional<EntityCandidato> deletarCandidato(String cpf) throws Exception {
+        Optional<EntityCandidato> retorno = candidadoRepository.findByCPF(cpf);
+        if (retorno.isPresent()) {
+           return candidadoRepository.deleteByCPF(cpf);
+        } else {
+            throw new RuntimeException("cpf inválido ou inexistente");
+        }
+
+    }
 }

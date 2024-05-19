@@ -9,4 +9,6 @@ import java.util.Optional;
 public interface CandidadoRepository extends JpaRepository <EntityCandidato,Long> {
 
     Optional<EntityCandidato> findByCPF(String cpf);
+
+   Optional <EntityCandidato> deleteByCPF(String cpf);
 }
