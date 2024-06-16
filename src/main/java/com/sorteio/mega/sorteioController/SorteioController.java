@@ -41,13 +41,24 @@ public class SorteioController {
     }
     @Transactional
     @DeleteMapping("/deletar-candidato/{cpf}")
-     public ResponseEntity <Optional <EntityCandidato>> deletarCandidato(@PathVariable String cpf){
+     public ResponseEntity <Optional <EntityCandidato>> deletarCandidatoPorCpf(@PathVariable String cpf){
         try {
-       return new ResponseEntity<>(sorteioService.deletarCandidato(cpf),HttpStatus.OK);
+       return new ResponseEntity<>(sorteioService.deletarCandidatoPorCpf(cpf),HttpStatus.OK);
         }catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @Transactional
+    @PutMapping("/editar-cadastro/{id}")
+    public ResponseEntity <EntityCandidato>editarCandidato(@RequestBody EntityCandidato candidato, @PathVariable Long id)throws Exception{
+       try {
+           return new ResponseEntity<>(sorteioService.editarCandidato(candidato,id),HttpStatus.OK);
+       }catch (Exception e){
+           e.printStackTrace();
+           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+       }
     }
 }
 

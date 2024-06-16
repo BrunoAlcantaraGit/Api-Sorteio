@@ -2,7 +2,7 @@ package com.sorteio.mega.sorteioService;
 
 
 import com.sorteio.mega.sorteioEntity.EntityCandidato;
-import com.sorteio.mega.sorteioEntity.FormatarCPF;
+import com.sorteio.mega.Component.FormatarCPF;
 import com.sorteio.mega.sorteioRepository.CandidadoRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -65,7 +65,7 @@ public class SorteioService {
     public Optional<EntityCandidato> resultadoSorteio(String cpf) throws Exception {
         Optional<EntityCandidato> retorno = candidadoRepository.findByCPF(cpf);
         if (retorno.isPresent()) {
-            return  retorno;
+            return retorno;
         } else {
             throw new RuntimeException("Candidat não existe ou CPF informado incorreto");
 
@@ -73,12 +73,25 @@ public class SorteioService {
 
     }
 
-    public Optional<EntityCandidato> deletarCandidato(String cpf) throws Exception {
+    public Optional<EntityCandidato> deletarCandidatoPorCpf(String cpf) throws Exception {
         Optional<EntityCandidato> retorno = candidadoRepository.findByCPF(cpf);
         if (retorno.isPresent()) {
-           return candidadoRepository.deleteByCPF(cpf);
+            return candidadoRepository.deleteByCPF(cpf);
         } else {
             throw new RuntimeException("cpf inválido ou inexistente");
+        }
+
+    }
+
+    public EntityCandidato editarCandidato(EntityCandidato candidato, Long id) throws Exception {
+
+        Optional<EntityCandidato> localizarCpf = candidadoRepository.findByCPF(candidato.getCPF());
+        Optional<EntityCandidato> localizarId = candidadoRepository.findById(id);
+
+        if (localizarCpf.isPresent() && localizarId.isPresent()) {
+            return candidadoRepository.save(candidato);
+        } else {
+            throw new RuntimeException("Cadastro não pode ser edita. Candidado não cadastrado!");
         }
 
     }

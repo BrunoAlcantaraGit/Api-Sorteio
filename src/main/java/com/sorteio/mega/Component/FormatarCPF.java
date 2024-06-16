@@ -1,4 +1,4 @@
-package com.sorteio.mega.sorteioEntity;
+package com.sorteio.mega.Component;
 
 import org.springframework.stereotype.Component;
 
