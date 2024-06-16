@@ -1,0 +1,1 @@
+web: jar -jar target/sorteio-mega-0.0.1-SNAPSHOT.jar
