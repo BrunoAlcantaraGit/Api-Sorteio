@@ -26,7 +26,7 @@ public class SorteioController {
         try {
          return new ResponseEntity<>(sorteioService.salvarCandidato(candidato),HttpStatus.CREATED);
         }catch (Exception e ){
-        e.printStackTrace();
+
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
